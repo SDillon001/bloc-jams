@@ -30,12 +30,7 @@ body {
 
 .navbar {
 	padding: 0.5rem;
-<<<<<<< HEAD
 	background-color: rgb(101,18,95);
-=======
-	background-color: rgb(101,18,95);	
-
->>>>>>> assignment-clearfix
 }
 
 .navbar .logo {
@@ -77,10 +72,5 @@ body {
 }
 
 .clearfix::after {
-<<<<<<< HEAD
 	clear: both;
 }
-=======
-   clear: both;
-}
->>>>>>> assignment-clearfix
