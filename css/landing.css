@@ -8,7 +8,6 @@
 /* Medium and small screens (640px) */
 
 @media (min-width: 640px) {
-
 	html { font-size: 112%; }
 
 }
@@ -16,14 +15,12 @@
 /* Large screens (1024px) */
 
 @media (min-width: 1024px) {
-
 	html { font-size: 112%; }
 	
 }
 
 
  body.landing {
-
  	background-color: rgb(58,23,63);
 
  }
@@ -38,7 +35,6 @@
 }
 
 .hero-content .hero-title {
-
 	position: absolute;
 	top: 40%;
 	-webkit-transform: translateY(-50%);
@@ -55,13 +51,10 @@
 }
 
 .selling-points {
-
 	position: relative;
-
 }
 
 .point {
-
 	position: relative;
 	padding: 2rem;
 	text-align: center;
@@ -69,7 +62,6 @@
 }
 
 .point .point-title {
-
 	font-size: 1.25rem;
 }
 
