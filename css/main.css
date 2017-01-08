@@ -72,7 +72,15 @@ body {
 	cursor: pointer;
 }
 
+.links-container:hover {
+	background-color: rgb(255,255,255);
+}
+
 .links-container .navbar-link:hover {
+	color: rgb(233,50,117);
+}
+
+.links-container .navbar-link:active {
 	color: rgb(233,50,117);
 }
 
