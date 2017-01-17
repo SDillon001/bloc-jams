@@ -28,6 +28,21 @@ var albumMarconi = {
 	]
 };
 
+var albumEagles = {
+	title: 'Eagles Greatest Hits, Vol. 2',
+	artist: 'The Eagles',
+	label: 'Asylum',
+	year: '1975-1980',
+	albumArtUrl: 'assets/images/album_covers/egv2.jpg',
+	songs: [
+		{ title: 'Hotel California', duration: '6:29' },
+		{ title: 'Heartache Tonight', duration: '4:25' },
+		{ title: 'Seven Bridges Road', duration: '2:58'},
+		{ title: 'Victim of Love', duration: '4:10' },
+		{ title: 'The Sad Café', duration: '5:32'}
+	]
+};
+
 var createSongRow = function(songNumber, songName, songLength) {
 	var template =
 	'<tr class="album-view-song-item">'
@@ -40,15 +55,15 @@ var createSongRow = function(songNumber, songName, songLength) {
 	return template;
 };
 
-var setCurrentAlbum = function(album) {
-
 	var albumTitle = document.getElementsByClassName('album-view-title')[0];
 	var albumArtist = document.getElementsByClassName('album-view-artist')[0];
 	var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
 	var albumImage = document.getElementsByClassName('album-cover-art')[0];
 	var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
-	albumTitle.firstChild.nodeValue = album.title;
+var setCurrentAlbum = function(album) {
+
+	albumTitle.firstChild.nodeValue = album.name;
 	albumArtist.firstChild.nodeValue = album.artist;
 	albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
 	albumImage.setAttribute('src', album.albumArtUrl);
@@ -62,4 +77,14 @@ var setCurrentAlbum = function(album) {
 
 window.onload = function() {
 	setCurrentAlbum(albumPicasso);
+
+	var albums = [albumPicasso, albumMarconi, albumEagles];
+	var index = 1;
+	albumImage.addEventListener("click", function(event) {
+		setCurrentAlbum(albums[index]);
+		index++;
+		if (index == albums.length) {
+			index = 0;
+		}
+	});
 };
