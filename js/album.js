@@ -28,6 +28,7 @@ var albumMarconi = {
 	]
 };
 
+// Template function to create song row html called by the for loop in setCurrentAlbum function
 var createSongRow = function(songNumber, songName, songLength) {
 	var template =
 	'<tr class="album-view-song-item">'
@@ -40,27 +41,32 @@ var createSongRow = function(songNumber, songName, songLength) {
 	return template;
 };
 
+// Window.onload sets album param to albumPicasso object
 var setCurrentAlbum = function(album) {
 
+	// sets var ablumTitle (et al) to album-view-title class - then set to the title of albumPicasso held in the object or 'The Colors'
 	var albumTitle = document.getElementsByClassName('album-view-title')[0];
 	var albumArtist = document.getElementsByClassName('album-view-artist')[0];
 	var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
 	var albumImage = document.getElementsByClassName('album-cover-art')[0];
 	var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
+	// Sets var defined above > .firstChild > .nodeValue (text node in this case) to value of albumPicasso (or whichever object is passed into setCurrentAlbum from window.onload) > .title, artist, etc  
 	albumTitle.firstChild.nodeValue = album.title;
 	albumArtist.firstChild.nodeValue = album.artist;
 	albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
 	albumImage.setAttribute('src', album.albumArtUrl);
 
+	// Set element to empty string before inserting new HTML content to make sure nothing is there
 	albumSongList.innerHTML = '';
 
+	// loops through albumSongList (which is = 'album-view-song-list') and creates song row inside inner HTML of 'album-view-song-list'
 	for (var i = 0; i < album.songs.length; i++) {
 		albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
 	}
 };
 
-// Checkpoint 13 - Change the Song Number to the Pause Button
+// findParentByClassName traverses up the DOM tree to find the parent with the class specified by element.parentElement
 
 var findParentByClassName = function(element, targetClass) {
 	if (element) {
@@ -72,7 +78,7 @@ var findParentByClassName = function(element, targetClass) {
 	}
 };
 
-// Checkpoint 13 - getSongItem() Method
+// returns the element with the .song-item-number class - need to go through this again with Junior
 
 var getSongItem = function(element) {
 	switch (element.className) {
@@ -91,6 +97,8 @@ var getSongItem = function(element) {
 		return;
 	}  
 };
+
+// Sets functionality of on:hover for play, pause button by setting currentlyPlayingSong = the ButtonTemplates 
 
 var clickHandler = function(targetElement) {
 	var songItem = getSongItem(targetElement);
@@ -116,9 +124,11 @@ var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause">
 
 var currentlyPlayingSong = null;
 
+// Sets the starting album to 'albumPicasso'
 window.onload = function() {
 	setCurrentAlbum(albumPicasso);
 
+	// Adds mouseover event listener for songListContainer which is set to 'album-view-song-list' in clickHandler
 	songListContainer.addEventListener('mouseover', function(event) {
 		if (event.target.parentElement.className === 'album-view-song-item') {
 			// Change the content from the number to the play button's HTML
@@ -131,15 +141,17 @@ window.onload = function() {
 		}
 	});
 
+	// Adds mouseleave event listener for songRows which is set to 'album-view-song-item' in clickHandler
 	for (var i = 0; i < songRows.length; i++) {
 		songRows[i].addEventListener('mouseleave', function(event) {
 			var songItem = getSongItem(event.target);
 			var songItemNumber = songItem.getAttribute('data-song-number');
 
+			// Change the content from the play button to the song number
 			if (songItemNumber !== currentlyPlayingSong) {
 				songItem.innerHTML = songItemNumber;
 			}
-         });
+		});
 
 		songRows[i].addEventListener('click', function(event) {
              // Event handler call
