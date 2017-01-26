@@ -38,31 +38,32 @@ var createSongRow = function(songNumber, songName, songLength) {
 	+ '</tr>'
 	;
 
-	return template;
+	return $(template);
 };
 
 // Window.onload sets album param to albumPicasso object
 var setCurrentAlbum = function(album) {
 
 	// sets var ablumTitle (et al) to album-view-title class - then set to the title of albumPicasso held in the object or 'The Colors'
-	var albumTitle = document.getElementsByClassName('album-view-title')[0];
-	var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-	var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-	var albumImage = document.getElementsByClassName('album-cover-art')[0];
-	var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+	var $albumTitle = $('.album-view-title');
+	var $albumArtist = $('.album-view-artist');
+	var $albumReleaseInfo = $('.album-view-release-info');
+	var $albumImage = $('.album-cover-art');
+	var $albumSongList = $('.album-view-song-list');
 
-	// Sets var defined above > .firstChild > .nodeValue (text node in this case) to value of albumPicasso (or whichever object is passed into setCurrentAlbum from window.onload) > .title, artist, etc  
-	albumTitle.firstChild.nodeValue = album.title;
-	albumArtist.firstChild.nodeValue = album.artist;
-	albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
-	albumImage.setAttribute('src', album.albumArtUrl);
+	// Sets var defined above to value of albumPicasso (or whichever object is passed into setCurrentAlbum from window.onload) > .title, artist, etc  
+	$albumTitle.text(album.title);
+	$albumArtist.text(album.artist);
+	$albumReleaseInfo.text(album.year + ' ' + album.label);
+	$albumImage.attr('src', album.albumArtUrl);
 
 	// Set element to empty string before inserting new HTML content to make sure nothing is there
-	albumSongList.innerHTML = '';
+	$albumSongList.empty();
 
-	// loops through albumSongList (which is = 'album-view-song-list') and creates song row inside inner HTML of 'album-view-song-list'
+	// loops through albumSongList (which is = 'album-view-song-list') and creates song row by appending $albumSongList ('album-view-song-list') with elements in var $newRow
 	for (var i = 0; i < album.songs.length; i++) {
-		albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+		var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+         $albumSongList.append($newRow);
 	}
 };
 
@@ -72,7 +73,7 @@ var findParentByClassName = function(element, targetClass) {
 	if (element) {
 		// getting the initial parent
 		var currentParent = element.parentElement;
-   
+
 		// if there is no parent to the element, bail
 		if (currentParent === null) {
 			return console.log('No parent found');
