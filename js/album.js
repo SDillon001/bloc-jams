@@ -1,3 +1,12 @@
+var setSong = function(songNumber) {
+	currentlyPlayingSongNumber = parseInt(songNumber);
+	currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+};
+
+var getSongNumberCell = function(number) {
+	return $('.song-item-number[data-song-number="' + number + '"]');
+};
+
 
 // Template function to create song row html called by the for loop in setCurrentAlbum function
 var createSongRow = function(songNumber, songName, songLength) {
@@ -17,7 +26,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 		// currentlyPlayingSong is set to null, this checks if it's not null
 		if (currentlyPlayingSongNumber !== null) {
 		// change to song number back from play/pause button for currently playing song because user started playing new song.
-		var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
+		var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
 		currentlyPlayingCell.html(currentlyPlayingSongNumber);
 	}
 	// if the element is not the song number
@@ -25,8 +34,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 			// switch from Play -> Pause button to indicate new song is playing.
 			$(this).html(pauseButtonTemplate);
 			// set currentlyPlayingSong equal to songNumber
-			currentlyPlayingSongNumber = songNumber;
-			currentSongFromAlbum = currentAlbum.songs[songNumber -1];
+			setSong(songNumber);
 			updatePlayerBarSong();
 		} else if (currentlyPlayingSongNumber === songNumber) {
 			// switch from Pause -> Play button to pause currently playing song.
@@ -127,8 +135,8 @@ var nextSong = function() {
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
-    var $nextSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
-    var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
+    var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
     
     $nextSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber);
@@ -162,8 +170,8 @@ var previousSong = function() {
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
-    var $previousSongNumberCell = $('.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]');
-    var $lastSongNumberCell = $('.song-item-number[data-song-number="' + lastSongNumber + '"]');
+    var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
     
     $previousSongNumberCell.html(pauseButtonTemplate);
     $lastSongNumberCell.html(lastSongNumber);
