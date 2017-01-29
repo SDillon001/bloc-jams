@@ -1,3 +1,5 @@
+
+// || ** Setting the Currently Playing Audio File ** ||
 var setSong = function(songNumber) {
 	// tests to see if a song is already playing to avoid multiple songs playing at once
 	if (currentSoundFile) {
@@ -14,9 +16,10 @@ var setSong = function(songNumber) {
 		formats: [ 'mp3' ],
 		preload: true
 	});
-
+	// call currentVolume variable and set default to 80
 	setVolume(currentVolume);
 };
+
 // wraps the Buzz setVolume() method with a conditional statement that checks to see if a  currentSoundFile exists and sets volume
 var setVolume = function(volume) {
 	if (currentSoundFile) {
@@ -60,7 +63,7 @@ var createSongRow = function(songNumber, songName, songLength) {
 			updatePlayerBarSong();
 		} else if (currentlyPlayingSongNumber === songNumber) {
 			if (currentSoundFile.isPaused()) {
-				$(this).html(pausedButtonTemplate);
+				$(this).html(pauseButtonTemplate);
 				$('.main-controls .play-pause').html(playerBarPauseButton);
 				currentSoundFile.play();
 			} else {
@@ -101,6 +104,8 @@ var offHover = function(event) {
 	return $row;
 };
 
+// || ** Building the Album Information / Image and Song List on the page ** ||  
+
 // Window.onload sets album param to albumPicasso object
 var setCurrentAlbum = function(album) {
 	currentAlbum = album;
@@ -128,8 +133,32 @@ var setCurrentAlbum = function(album) {
 	}
 };
 
-// returns the index of a song found in album's songs array
+// || ** Toggling from Play to Pause on Bottom Bar Player ** || 
+var togglePlayFromPlayerBar = function() {
 
+	// if song is paused and play button is clicked in the player bar
+	if (currentSoundFile.isPaused()) {
+		// then => change the song number cell from play button to pause button
+		var songNumberCell = $(this).find('.song-item-number');
+		songNumberCell.html(pauseButtonTemplate);
+		// change the HTML of the player bar's play button to pause button
+		$playButton.html(playerBarPauseButton);
+		// play the song
+		setSong(songNumber);
+
+	// if a song is playing and the pause button is clicked
+	} else if (currentSoundFile) {
+		// then => change the song number cell from puase button to play button
+		var songNumberCell = $(this).find('.song-item-number');
+		songNumberCell.html(playButtonTemplate);
+		// change the HTML of the player bar's pause button to play button
+		$playButtonButton.html(playerBarPlayButton);
+		// pause the song
+		currentSoundFile.pause();
+	}
+};
+
+// returns the index of a song found in album's songs array
 var trackIndex = function(album, song) {
 	return album.songs.indexOf(song);
 };
@@ -216,7 +245,7 @@ var updatePlayerBarSong = function() {
 
 };
 
-// Variable List
+// || ** Variable List ** ||
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 var playerBarPlayButton = '<span class="ion-play"></span';
@@ -230,10 +259,12 @@ var currentVolume = 80; // sets default start volume
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playButton = $('.main-controls .play-pause');
 
 // Sets the starting album to 'albumPicasso' and sets click handlers for previous and next buttons in Player Bar
 $(document).ready(function() {
 	setCurrentAlbum(albumPicasso);
 	$previousButton.click(previousSong);
 	$nextButton.click(nextSong);
+	$playButton.click(togglePlayFromPlayerBar());
 });
