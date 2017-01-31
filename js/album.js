@@ -25,7 +25,7 @@ var setVolume = function(volume) {
 	if (currentSoundFile) {
 		currentSoundFile.setVolume(volume);
 	}
-}
+};
 
 var getSongNumberCell = function(number) {
 	return $('.song-item-number[data-song-number="' + number + '"]');
@@ -142,9 +142,9 @@ var togglePlayFromPlayerBar = function() {
 		var songNumberCell = $(this).find('.song-item-number');
 		songNumberCell.html(pauseButtonTemplate);
 		// change the HTML of the player bar's play button to pause button
-		$playButton.html(playerBarPauseButton);
+		$('.main-controls .play-pause').html(playerBarPauseButton);
 		// play the song
-		setSong(songNumber);
+		currentSoundFile.play();
 
 	// if a song is playing and the pause button is clicked
 	} else if (currentSoundFile) {
@@ -152,7 +152,7 @@ var togglePlayFromPlayerBar = function() {
 		var songNumberCell = $(this).find('.song-item-number');
 		songNumberCell.html(playButtonTemplate);
 		// change the HTML of the player bar's pause button to play button
-		$playButtonButton.html(playerBarPlayButton);
+		$('.main-controls .play-pause').html(playerBarPlayButton);
 		// pause the song
 		currentSoundFile.pause();
 	}
