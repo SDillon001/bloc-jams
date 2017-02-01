@@ -19,7 +19,7 @@ var seek = function(time) {
 	if (currentSoundFile) {
 		currentSoundFile.setTime(time);
 	}
-}
+};
 
 	setVolume(currentVolume);
 	};
@@ -74,7 +74,7 @@ var clickHandler = function() {
 
 	} else if (currentlyPlayingSongNumber === songNumber) {
 		if (currentSoundFile.isPaused()) {
-			$(this).html(pausedButtonTemplate);
+			$(this).html(pauseButtonTemplate);
 			$('.main-controls .play-pause').html(playerBarPauseButton);
 			currentSoundFile.play();
 			updateSeekBarWhileSongPlays();
@@ -144,6 +144,7 @@ var setCurrentAlbum = function(album) {
 };
 
 // || ** Toggling from Play to Pause on Bottom Bar Player ** || 
+
 var togglePlayFromPlayerBar = function() {
 
 	// if song is paused and play button is clicked in the player bar
@@ -152,7 +153,7 @@ var togglePlayFromPlayerBar = function() {
 		var songNumberCell = $(this).find('.song-item-number');
 		songNumberCell.html(pauseButtonTemplate);
 		// change the HTML of the player bar's play button to pause button
-		$('.main-controls .play-pause').html(playerBarPauseButton);
+		$playButton.html(playerBarPauseButton);
 		// play the song
 		currentSoundFile.play();
 
@@ -162,7 +163,7 @@ var togglePlayFromPlayerBar = function() {
 		var songNumberCell = $(this).find('.song-item-number');
 		songNumberCell.html(playButtonTemplate);
 		// change the HTML of the player bar's pause button to play button
-		$('.main-controls .play-pause').html(playerBarPlayButton);
+		$playButton.html(playerBarPlayButton);
 		// pause the song
 		currentSoundFile.pause();
 	}
@@ -198,7 +199,7 @@ var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
 	$seekBar.find('.thumb').css({left: percentageString});
 };
 
-	// method for determining the  seekBarFillRatio
+// method for determining the  seekBarFillRatio
 var setupSeekBars = function() {
 	// find all elements in the DOM with a class of  "seek-bar" that are contained within the element with a class of "player-bar"
 	var $seekBars = $('.player-bar .seek-bar');
@@ -247,8 +248,23 @@ var setupSeekBars = function() {
 	});
 };
 
-// returns the index of a song found in album's songs array
+var setCurrentTimeInPlayerBar = function(currentTime) {
+	// sets the text of the element with the .current-time class to the current time in the song
+	// Add the method to updateSeekBarWhileSongPlays() so the current time updates with song playback.
+};
 
+var setTotalTimeInPlayerBar = function(totalTime) {
+	// sets the text of the element with the .total-time class to the length of the song
+	// Add the method to updatePlayerBarSong() so the total time is set when a song first plays.
+};
+
+var filterTimeCode = function(timeInSeconds) {
+	// Use the parseFloat() method to get the seconds in number form.
+	// Store variables for whole seconds and whole minutes (hint: use Math.floor() to round numbers down).
+	// Return the time in the format X:XX
+};
+
+// returns the index of a song found in album's songs array
 var trackIndex = function(album, song) {
 	return album.songs.indexOf(song);
 };
@@ -351,6 +367,7 @@ var currentVolume = 80; // sets default start volume
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playButton = $('.main-controls .play-pause');
 
 // Sets the starting album to 'albumPicasso' and sets click handlers for previous and next buttons in Player Bar
 $(document).ready(function() {
@@ -358,4 +375,5 @@ $(document).ready(function() {
 	setupSeekBars();
 	$previousButton.click(previousSong);
 	$nextButton.click(nextSong);
+	$playButton.click(togglePlayFromPlayerBar());
 });
