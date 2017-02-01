@@ -136,25 +136,27 @@ var setCurrentAlbum = function(album) {
 // || ** Toggling from Play to Pause on Bottom Bar Player ** || 
 var togglePlayFromPlayerBar = function() {
 
-	// if song is paused and play button is clicked in the player bar
-	if (currentSoundFile.isPaused()) {
-		// then => change the song number cell from play button to pause button
-		var songNumberCell = $(this).find('.song-item-number');
-		songNumberCell.html(pauseButtonTemplate);
-		// change the HTML of the player bar's play button to pause button
-		$('.main-controls .play-pause').html(playerBarPauseButton);
-		// play the song
-		currentSoundFile.play();
+	if (currentSoundFile) {
+		// if song is paused and play button is clicked in the player bar
+		if (currentSoundFile.isPaused()) {
+			// then => change the song number cell from play button to pause button
+			var songNumberCell = $(this).find('.song-item-number');
+			songNumberCell.html(pauseButtonTemplate);
+			// change the HTML of the player bar's play button to pause button
+			$('.main-controls .play-pause').html(playerBarPauseButton);
+			// play the song
+			currentSoundFile.play();
 
-	// if a song is playing and the pause button is clicked
-	} else if (currentSoundFile) {
-		// then => change the song number cell from puase button to play button
-		var songNumberCell = $(this).find('.song-item-number');
-		songNumberCell.html(playButtonTemplate);
-		// change the HTML of the player bar's pause button to play button
-		$('.main-controls .play-pause').html(playerBarPlayButton);
-		// pause the song
-		currentSoundFile.pause();
+		// if a song is playing and the pause button is clicked
+		} else {
+			// then => change the song number cell from puase button to play button
+			var songNumberCell = $(this).find('.song-item-number');
+			songNumberCell.html(playButtonTemplate);
+			// change the HTML of the player bar's pause button to play button
+			$('.main-controls .play-pause').html(playerBarPlayButton);
+			// pause the song
+			currentSoundFile.pause();
+		}
 	}
 };
 
@@ -266,5 +268,5 @@ $(document).ready(function() {
 	setCurrentAlbum(albumPicasso);
 	$previousButton.click(previousSong);
 	$nextButton.click(nextSong);
-	$playButton.click(togglePlayFromPlayerBar());
+	$playButton.click(togglePlayFromPlayerBar);
 });
