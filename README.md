@@ -1,17 +1,6 @@
----
-layout: post
-title: BlocJams
-feature-img: "img/bloc-jams-homepage.png"
-thumbnail-path: "img/bloc-jams-home-page-thumb.png"
-short-description: BlocJams project website - Bloc Online Bootcamp - Jan/June 2017
-
----
-<!-- This is an example of a post which includes a feature image specified in the front matter of the post. The feature image spans the full-width of the page, and is shown with the title on permalink pages. -->
+Link to Project on **GitHub Pages: [Bloc-Jams](http://gitfolio.stevedillon.net/)**
 
 # Bloc-Jams Case Study
-
-{:.center}
-[![]({{ site.baseurl }}/img/bloc-jams-home-page-post.png)](http://stevedillon.net/bloc/bloc-jams/)
 
 ## Project Summary
 ___
@@ -27,13 +16,11 @@ Students were provided with the logo, icons, background images and mp3 music fil
 ## Objective
 ___
 
-The main function of the **Bloc Jams** application is to display an album view and play music files. The project began with creating the landing page and a link to an album 'collection' view (pictured below).
-
-[![]({{ site.baseurl }}/img/bloc-jams-collection-view.png)](http://stevedillon.net/bloc/bloc-jams/album.html)
+The main function of the **Bloc Jams** application is to display an album view and play music files. The project began with creating the landing page and a link to an album called 'collection' view.
 
 The album cover and title information were created dynamically by creating an album template using JavaScript in a function called `buildCollectionItemTemplate`:
 
-{% highlight javascript %}
+```JavaScript
 var buildCollectionItemTemplate = function() {
    var template =
    '<div class="collection-album-container column fourth">'
@@ -52,11 +39,11 @@ var buildCollectionItemTemplate = function() {
    ;
    return $(template);
 };
-{% endhighlight %}
+```
 
 The HTML created in the `$template` variable was called using a `$(window).load(function()`:
 
-{% highlight javascript %}
+```JavaScript
 $(window).load(function() {
     var $collectionContainer = $('.album-covers');
     
@@ -67,13 +54,10 @@ $(window).load(function() {
      $collectionContainer.append($newThumbnail);
   }
 });
-{% endhighlight %}
-
+```
 ___
 
-Students were also tasked with creating a songplayer UI (pictured below) that would be linked to by clicking on an album name on the album collection view page.
-
-[![]({{ site.baseurl }}/img/bloc-jams-album-page-post.png)](http://stevedillon.net/bloc/bloc-jams/album.html)
+Students were also tasked with creating a songplayer UI that would be linked to by clicking on an album name on the album collection view page.
 
 In addition to a song list, the project requirements included the ability to switch between song tracks, pause, play and update the total duration in minutes for each track. Song transition was needed in two locations, in the song list grid in the center of the album page as well as at the buttons in the player bar at the bottom of the page. 
 
@@ -83,7 +67,7 @@ ___
 
 Songs are initialized in the application using [Buzz! - a JavaScript HTML5 audio library](http://buzz.jaysalvat.com/documentation/sound/). On page load, the first song is initialized by setting the `songNumber` using the Buzz library in the function `setSong`: 
 
-{% highlight javascript %}
+```JavaScript
 var setSong = function(songNumber) {
 
     if (currentSoundFile) {
@@ -100,7 +84,7 @@ var setSong = function(songNumber) {
 
     setVolume(currentVolume);
 };
-{% endhighlight %}
+```
 
 ___
 
@@ -108,7 +92,7 @@ ___
 
 A `clickhandler` function makes each song row clickable allowing the user to toggle play / pause each song from the row. 
 
-{% highlight javascript %}
+```JavaScript
 var clickHandler = function() {
     var songNumber = parseInt($(this).attr('data-song-number'));
     if (currentlyPlayingSongNumber !== null) {
@@ -140,13 +124,13 @@ var clickHandler = function() {
         }
     }
 };
-{% endhighlight %}
+```
 
 ___
 
 Additionally, the `togglePlayFromPlayerBar` function allows the user to toggle play / pause each song from the player bar at the bottom of the page.
 
-{% highlight javascript %}
+```JavaScript
 var togglePlayFromPlayerBar = function() {
     if (currentSoundFile) {
         if (currentSoundFile.isPaused()) {
@@ -162,7 +146,7 @@ var togglePlayFromPlayerBar = function() {
         }
     }
 };
-{% endhighlight %}
+```
 
 ___
 
